@@ -48,12 +48,12 @@ class ServerProtocol(asyncio.Protocol):
         if len(self.server.clients) > 1:
             # Проверка занятости логина у существующих пользователей
             if any(str(client.login).lower() == user_login.lower() for client in self.server.clients):
-                self.transport.write("Пользователь с таким логином уже существует. Для входа введите auth:ВашЛогин\n".encode())
+                self.transport.write(f"Логин {user_login} занят, попробуйте другой\n".encode())
                 return False
             # Новый логин не занят
             else:
                 return True
-        # Число пользователей = 0
+        # Число пользователей > 1
         else:
             return True
 
